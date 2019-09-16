@@ -98,3 +98,39 @@ export class TestComponent {
 <p [style-color]="mutedColor">Some muted message</p>
 <p [ngStyle]="paragraphStyles">Some muted message</p>
 ```
+
+## Event binding
+// test.component.html
+```
+<button (click)="onClick()"></button>
+<button (click)="onClickWithEvent($event)"></button>
+```
+
+// test.component.ts
+```
+export class TestComponent {
+    onClick() {
+        // do something
+    }
+    
+    onClickWithEvent(event) {
+        console.log(event);
+    }
+}
+```
+
+## Template reference variables
+// test.component.html
+```
+<input #myInput type="text">
+<button (click)="onClick(myInput.value)"></button>
+```
+
+// test.component.ts
+```
+export class TestComponent {
+    onClick(s) {
+        console.log(s);
+    }
+}
+```
