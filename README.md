@@ -14,9 +14,7 @@ ng gc <componentname>
 ```
 
 ## Interpolation
-
-// test.component.ts
-```
+```ts test.component.ts
 export class TestComponent {
     public name = 'World';
     
@@ -26,8 +24,7 @@ export class TestComponent {
 }
 ```
 
-// test.component.html
-```
+```html test.component.html
 <p>Hello {{ name }}</p>
 <p>{{ name }} is {{ name.length }} chars long.</p>
 <p>{{ name.toUpperCase() }} can be uppercase.</p>
