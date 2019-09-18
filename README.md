@@ -204,3 +204,57 @@ export class TestComponent {
     public names = ['Alice', 'Bob', 'Charlie', 'Dan'];
 }
 ```
+
+## Components interaction
+
+## Sending parameters to a child component
+```ts
+// app.component.ts
+export class AppComponent {
+    public name = 'Alice';          // parameter to pass to TestComponent
+    public lastName = 'Smith';      // another parameter
+}
+```
+
+```html
+<!-- app.component.html -->
+<test-component [nameFromApp="name"] [lastName="lastname"]></test-component>
+```
+
+```ts
+// test.component.ts
+import { ..., Input } from '@angular/core';
+export class TestComponent {
+    @Input() public nameFromApp;            // by default the parameter has the property name
+    @Input('lastName') public familyName;   // internally I can use a different name then the parameter name
+}
+```
+
+```html
+<!-- test.component.html -->
+<p>Hello, {{ nameFromApp }} {{ familyName }}!</p>
+```
+
+### Sending data to parent component
+```ts
+// test.component.ts
+import { ..., Output, EventEmitter } from '@angular/core';
+export class TestComponent {
+    @Output() public childEvent = new EventEmitter();
+    
+    fireEvent() {
+        this.childEvent.emit('Hi app!');
+    }
+}
+```
+
+```html
+<!-- test.component.html -->
+<button (click)="fireEvent()">Send data to App</button>
+```
+
+```html
+<!-- app.component.html -->
+<test-component (childEvent)="messsage=$event"></test-component>
+Message received from TestComponent: {{ message }}
+```
