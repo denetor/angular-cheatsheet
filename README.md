@@ -4,17 +4,18 @@ Angular 2+ cheatsheet
 ## Command line
 
 ### Create application
-```
+```bash
 ng new <appname>
 ```
 
 ### Generate new component
-```
+```bash
 ng gc <componentname>
 ```
 
 ## Interpolation
-```ts test.component.ts
+```ts
+// test.component.ts
 export class TestComponent {
     public name = 'World';
     
@@ -24,7 +25,8 @@ export class TestComponent {
 }
 ```
 
-```html test.component.html
+```html
+<!-- test.component.html -->
 <p>Hello {{ name }}</p>
 <p>{{ name }} is {{ name.length }} chars long.</p>
 <p>{{ name.toUpperCase() }} can be uppercase.</p>
@@ -32,16 +34,16 @@ export class TestComponent {
 ```
 
 ## Property interpolation
+```ts
 // test.component.ts
-```
 export class TestComponent {
     public elementId = 'nameInput';
     public isDisabled = true;
 }
 ```
 
-// test.component.html
-```
+```html
+<!-- test.component.html -->
 <input [id]="elementId" type="text">
 <input id="{{ elementId }}" type="text">
 <input bind-id="elementId" type="text">
@@ -51,8 +53,8 @@ export class TestComponent {
 ```
 
 ## Class binding
+```ts
 // test.component.ts
-```
 export class TestComponent {
     public elementClass = "text-success";
     public hasError = true;
@@ -64,8 +66,8 @@ export class TestComponent {
 }
 ```
 
-// test.component.html
-```
+```html
+<!-- test.component.html -->
 <p [class]="elementClass">Some message</p>
 
 <!-- this applues text-fanger class if hasError returns true -->
@@ -78,8 +80,8 @@ export class TestComponent {
 ## Style binding
 It's similar to class binding
 
+```ts
 // test.component.ts
-```
 export class TestComponent {
     public mutedColor = "#aaaaaa";
     public paragraphStyles = {
@@ -89,22 +91,22 @@ export class TestComponent {
 }
 ```
 
-// test.component.html
-```
+/```html
+<!-- test.component.html -->
 <p [style-color]="'red'">Some message</p>
 <p [style-color]="mutedColor">Some muted message</p>
 <p [ngStyle]="paragraphStyles">Some muted message</p>
 ```
 
 ## Event binding
-// test.component.html
-```
+```html
+<!-- test.component.html -->
 <button (click)="onClick()"></button>
 <button (click)="onClickWithEvent($event)"></button>
 ```
 
+```ts
 // test.component.ts
-```
 export class TestComponent {
     onClick() {
         // do something
@@ -117,14 +119,14 @@ export class TestComponent {
 ```
 
 ## Template reference variables
-// test.component.html
-```
+```html
+<!-- test.component.html -->
 <input #myInput type="text">
 <button (click)="onClick(myInput.value)"></button>
 ```
 
+```ts
 // test.component.ts
-```
 export class TestComponent {
     onClick(s) {
         console.log(s);
@@ -133,22 +135,22 @@ export class TestComponent {
 ```
 
 ## Two way binding
-// test.component.html
-```
+```html
+<!-- test.component.html -->
 <input [(ngModel)]="name" type="text">
 Hello {{ name }}
 ```
 
+```ts
 // test.component.ts
-```
 export class TestComponent {
     public name = 'Denetor';
 }
 ```
 
 But we have to import the forms module
+```ts
 // app.module.ts
-```
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
@@ -161,8 +163,8 @@ import { FormsModule } from '@angular/forms';
 ## Structural directives
 
 ### ngIf
-// test.component.html
-```
+```html
+<!-- test.component.html -->
 <div *ngIf="hasError()">You have an error</div>
 
 <div *ngIf="name.length > 0; then hasNameBlock; else noNameBlock"></div>
@@ -171,8 +173,8 @@ import { FormsModule } from '@angular/forms';
 ```
 
 ### ngSwitch
-// test.component.html
-```
+```html
+<!-- test.component.html -->
 <div [ngSwitch]="alertLevel">
     <span *ngSwitchCase="'red'">Red alert</span>
     <span *ngSwitchCase="'yellow'">Yellow alert</span>
@@ -181,8 +183,8 @@ import { FormsModule } from '@angular/forms';
 ```
 
 ## ngFor
-// test.component.html
-```
+```html
+<!-- test.component.html -->
 <div [ngFor]="let name of names">
     {{ name }},
 </div>
@@ -196,8 +198,8 @@ import { FormsModule } from '@angular/forms';
 </div>
 ```
 
+```ts
 // test.component.ts
-```
 export class TestComponent {
     public names = ['Alice', 'Bob', 'Charlie', 'Dan'];
 }
