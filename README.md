@@ -134,3 +134,74 @@ export class TestComponent {
     }
 }
 ```
+
+## Two way binding
+// test.component.html
+```
+<input [(ngModel)]="name" type="text">
+Hello {{ name }}
+```
+
+// test.component.ts
+```
+export class TestComponent {
+    public name = 'Denetor';
+}
+```
+
+But we have to import the forms module
+// app.module.ts
+```
+import { FormsModule } from '@angular/forms';
+
+@NgModule({
+    imports: [
+        FormsModule
+    ]
+})
+```
+
+## Structural directives
+
+### ngIf
+// test.component.html
+```
+<div *ngIf="hasError()">You have an error</div>
+
+<div *ngIf="name.length > 0; then hasNameBlock; else noNameBlock"></div>
+<ng-template #hasNameBlock>Hello {{ name }}!</ng-template>
+<ng-template #noNameBlock>Hello unnamed!</ng-template>
+```
+
+### ngSwitch
+// test.component.html
+```
+<div [ngSwitch]="alertLevel">
+    <span *ngSwitchCase="'red'">Red alert</span>
+    <span *ngSwitchCase="'yellow'">Yellow alert</span>
+    <span *ngSwitchCase="'green'">No alert</span>
+</div>
+```
+
+## ngFor
+// test.component.html
+```
+<div [ngFor]="let name of names">
+    {{ name }},
+</div>
+
+<div [ngFor]="let name of names; index as i"> <!-- even as e; odd as o; ... -->
+    {{ i }}: {{ name }}<br />
+</div>
+
+<div [ngFor]="let name of names; last as lastItem">
+    {{ name }}<span *ngIf="!lastItem">,</span>
+</div>
+```
+
+// test.component.ts
+```
+export class TestComponent {
+    public names = ['Alice', 'Bob', 'Charlie', 'Dan'];
+}
+```
