@@ -258,3 +258,46 @@ export class TestComponent {
 <test-component (childEvent)="messsage=$event"></test-component>
 Message received from TestComponent: {{ message }}
 ```
+
+## Pipes
+Used to transform output in a template. Each one can have more parameters
+```html
+<!-- test.component.html -->
+{{ name | uppercase }} <!-- lowercase; titlecase; ... }}
+{{ 'abcdefg' | slice:3:5 }} <!-- cd -->
+{{ someObject | json }} <!-- { property: value, ... } -->
+{{ 1.2345 | number:'2.2-3' }} <!-- '01.234' (integers, minDecimals, maxDecimals) -->
+{{ 0.25 | percent }}
+{{ 320.25 | currency : 'EUR' }}
+{{ birthDate | date:'short' }}
+```
+
+## Services
+A service isa a class usad to share data, implementin application logic or connect to external services.
+
+### Dependency injection
+It's used to inject dependency in a class instead of let them being defined by the class itself.
+
+Class without DI:
+```
+class Car {
+    engine;
+    tyres;
+    constructor() {
+        this.engine = new Engine();
+        this.tyres = new Tyres();
+    }
+}
+```
+
+Class with DI:
+```
+class Car {
+    engine;
+    tyres;
+    constructor(engine, tyres) {
+        this.engine = engine();
+        this.tyres = tyres();
+    }
+}
+```
