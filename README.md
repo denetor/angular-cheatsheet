@@ -275,11 +275,11 @@ Used to transform output in a template. Each one can have more parameters
 ## Services
 A service isa a class usad to share data, implementin application logic or connect to external services.
 
-### Dependency injection
+### 18. Dependency injection
 It's used to inject dependency in a class instead of let them being defined by the class itself.
 
 Class without DI:
-```
+```ts
 class Car {
     engine;
     tyres;
@@ -291,7 +291,7 @@ class Car {
 ```
 
 Class with DI:
-```
+```ts
 class Car {
     engine;
     tyres;
@@ -300,4 +300,13 @@ class Car {
         this.tyres = tyres();
     }
 }
+```
+
+## 23. Routing
+```ts
+// app-routing.module.ts
+import { MyComponent } from './my/my.component';
+const routes: Routes = [
+  { path: 'myroute', component: MyComponent }
+];
 ```
