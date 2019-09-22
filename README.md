@@ -302,6 +302,104 @@ class Car {
 }
 ```
 
+## 19. Using a service
+To create a service, use the console
+```bash
+ng c s test
+```
+
+```ts
+// app.module.ts
+import { TestService  } from '.test.service';
+    ...
+    providers: [TestService],
+    ...
+```
+
+Then use it in a component
+```ts
+// test.component.ts
+export class TestComponent {
+    contructor (private _testService: TestService) {
+    ngOnInit() {
+        let a = this._testService.getSomething();
+    }
+}
+```
+
+## 20 HTTP and Observables
+Sometimes you need to make a component subscribe to a service in order to fetch it via a http call and then display it in the component's view.
+
+First import http module in the app.
+```ts
+// app.module.ts
+import { HttpClientModule  } from '@angular/common/http';
+    ...
+    imports: [HttpClientModule],
+    ...
+```
+
+The use http module in the service
+```ts
+// test.service.ts
+import { HttpClient } from '@angular/common/http';
+import { IMyData } from './mydata';
+import { Observable } from 'rxjs/Observable';
+
+    constructor(private http: HttpClient) {
+    }
+    
+    getSomeData():Observable<IMyData[]> {
+        // this cast will return an observable of type array containing IMyData data
+        return this.http.get<IMyData[]>('https://serverurl.domain/servicepath');
+    }
+```
+
+Now let's create an interface file for the data returned by the observable
+```ts
+// mydata.ts
+export interface IMyData {
+    id: number,
+    name: string
+}
+```
+
+Now we are ready to subscribe the Observable from a component
+```ts
+// test.component.ts
+    ngOnInit() {
+        this._testService.getSomething().subscribe(data => this.myData = data);
+    }
+```
+
+### Error handling
+We need to catch errors fetching data.
+```ts
+// test.service.ts
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
+
+    getSomeData():Observable<IMyData[]> {
+        return this.http.get<IMyData[]>('https://serverurl.domain/servicepath')
+                        .catch(this.errorHandler);
+    }
+    
+    errorHandler(error: HttpErrorResponse) {
+        return Observable.throw(error.message || 'Generic error');
+    }
+```
+
+And manage the error
+```ts
+// test.component.ts
+    ngOnInit() {
+        this._testService.getSomething().subscribe(
+            data => this.myData = data,
+            error => this.errroMsg = data
+        );
+    }
+```
+
 ## 23. Routing
 ```ts
 // app-routing.module.ts
@@ -310,3 +408,4 @@ const routes: Routes = [
   { path: 'myroute', component: MyComponent }
 ];
 ```
+
