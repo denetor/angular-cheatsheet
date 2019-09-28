@@ -405,7 +405,47 @@ And manage the error
 // app-routing.module.ts
 import { MyComponent } from './my/my.component';
 const routes: Routes = [
-  { path: 'myroute', component: MyComponent }
+  { path: 'myroute', component: MyComponent },              // catch myserver:port/myroute
+  { path: 'user/:id', component: UserDetailComponent },     // route with detail
+  { path: '**', component: PageNotFoundComponent }          // catch every other path
 ];
 ```
+
+### ParamMap Observable
+If you try to change a route parameter, the browser URL changes, but the page remains at the previous page.
+Example:
+```ts
+// user-detail.module.ts
+import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+ngOnInit() {
+    let id = parseInt(this.route.snapshot.paramMap.get('id'));  // read route parameter
+    this.userId = id;
+}
+gotoNext() {
+    let nextId = this.userId + 1;
+    this.router.navigate(['/users', nextId]);       // this will not work if i'm already in a /users/:id route
+}
+```
+
+I must use an Observable:
+```ts
+// user-detail.module.ts
+import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+ngOnInit() {
+    // this.router.paramMap returns an Observable
+    this.router.paramMap.subscribe((params: ParamMap) => {
+        let id = parseInt(params.get('id');
+        this.userId = id;
+    });
+}
+
+gotoNext() {
+    let nextId = this.userId + 1;
+    this.router.navigate(['/users', nextId]);       // this will not work if i'm already in a /users/:id route
+}
+```
+
+### Optional route parameters
+To have an optional route parameter, thr route declaration can remain the same, we read the parameter via paramMap like the previous example.
+
 
