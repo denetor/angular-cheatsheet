@@ -407,6 +407,13 @@ import { MyComponent } from './my/my.component';
 const routes: Routes = [
   { path: 'myroute', component: MyComponent },              // catch myserver:port/myroute
   { path: 'user/:id', component: UserDetailComponent },     // route with detail
+  { 
+    path: 'help', component: HelpComponent                  // route with child routes
+    children: [
+        { path: 'overview', component: HelpOverviewComponent },
+        { path: 'some-detail', component: HelpSomeDetailComponent }
+    ]
+  },     // route with detail
   { path: '**', component: PageNotFoundComponent }          // catch every other path
 ];
 ```
@@ -448,4 +455,16 @@ gotoNext() {
 ### Optional route parameters
 To have an optional route parameter, thr route declaration can remain the same, we read the parameter via paramMap like the previous example.
 
+### Relative navigation
+```ts
+// user-detail.module.ts
+gotoNext() {
+    let nextId = this.userId + 1;
+    // this.router.navigate(['/users', nextId]);       // absolute navigation
+    this.router.navigate([nextId], { relativeTo: this.route });
+}
+```
 
+```ts
+this.router.navigate(['../', { param: someValue }], { relativeTo: this.route });    // go to parent route
+```
