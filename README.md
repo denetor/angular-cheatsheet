@@ -471,12 +471,13 @@ this.router.navigate(['../', { param: someValue }], { relativeTo: this.route });
 
 ## Utilities
 ### Installing bootstrap
-Prima installare Bootstrap
+First install Bootstrap:
 ```
 npm install --save bootstrap
 ```
 
-Poi importarlo nel file angular.json:
+Then import it in angular.json:
+```
 {
   "projects": {
     "ng2-tools": {
@@ -487,4 +488,4 @@ Poi importarlo nel file angular.json:
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.sass"
             ],
-            
+```
