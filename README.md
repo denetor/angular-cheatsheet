@@ -468,3 +468,23 @@ gotoNext() {
 ```ts
 this.router.navigate(['../', { param: someValue }], { relativeTo: this.route });    // go to parent route
 ```
+
+## Utilities
+### Installing bootstrap
+Prima installare Bootstrap
+```
+npm install --save bootstrap
+```
+
+Poi importarlo nel file angular.json:
+{
+  "projects": {
+    "ng2-tools": {
+      "architect": {
+        "build": {
+          "options": {
+            "styles": [
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/styles.sass"
+            ],
+            
